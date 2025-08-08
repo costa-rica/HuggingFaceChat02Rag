@@ -2,8 +2,17 @@
 
 This is a simple example of a chatbot using the HuggingFace Chat API and a local vector database.
 
+## Steps to build index then prompt
+1. run `python build_index.py`
+2. run `python rag_chat_prompt.py "Your question here"`
+- optional: add -k 50 to retrieve more context
+- optional: add --debug to print retrieved context
+- example: `python rag_chat_prompt.py "What has my sleep been like for the past week?" -k 50 --debug`
+3. copy the prompt from the output
+4. paste the prompt into your chat model
 
-## Steps
+
+## Steps to perform RAG techinique
 
 ### 1.  ingest data
 - load the CSV file containing raw data
