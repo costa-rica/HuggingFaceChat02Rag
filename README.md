@@ -1,7 +1,8 @@
 # HuggingFaceChat02Rag
 
 This is a simple example of a chatbot using the HuggingFace Chat API and a local vector database.
-
+## What is RAG?
+RAG is a prompting technique that combines search with generation — first retrieve relevant chunks of data, then feed them into the model along with your question.
 ## Steps to build index then prompt
 1. run `python build_index.py`
 2. run `python rag_chat_prompt.py "Your question here"`
