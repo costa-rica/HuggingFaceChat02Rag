@@ -24,3 +24,5 @@ This is a simple example of a chatbot using the HuggingFace Chat API and a local
 - embed the user query using the same embedding model
 - perform a k-NN search in the FAISS index to find relevant documents
 - send the retrieved context to the Friendli endpoint for response generation
+- run: `python rag_chat.py`
+- output: makes a call to the Friendli endpoint and prints the response
