@@ -4,25 +4,37 @@ This is a simple example of a chatbot using the HuggingFace Chat API and a local
 
 
 ## Steps
+
 ### 1.  ingest data
-- load data from a file
 - load the CSV file containing raw data
 - format each row into a short text "document" for processing
-- run: `python build_index.py`
-- output: creates faiss.index and docs.json in the index directory
+- occurs in `build_index.py`
+
 ### 2. 	Embed data
 - use a small local embedding model to generate vectors
-- cache the embedding model locally for faster access
 - convert each document into its vector representation
+- occurs in `build_index.py`
 
 ### 3. 	Index
-- store the generated vectors in a FAISS index
-- save the FAISS index to disk for persistence
-- prepare the index for efficient similarity search
+- store the generated vectors in a FAISS index file.
+- occurs in `build_index.py`
 
 ### 4.	Retrieve
+In this step we actually interact with the model.
 - embed the user query using the same embedding model
 - perform a k-NN search in the FAISS index to find relevant documents
 - send the retrieved context to the Friendli endpoint for response generation
-- run: `python rag_chat.py`
-- output: makes a call to the Friendli endpoint and prints the response
+- occurs in `rag_chat.py`
+
+## installation
+
+```bash
+pip install pandas faiss-cpu sentence-transformers python-dotenv requests
+```
+
+## Set up
+
+1. Create a `.env` file in the root directory 
+2. create folder for context data - this stores the csv raw data for context
+3. create folder for index data - this stores the faiss index and docs.json
+

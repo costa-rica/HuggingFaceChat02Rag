@@ -27,13 +27,16 @@ def row_to_doc(r):
 
     return f"[{day}] hours:{hours_str} score:{score_str}"
 
-def main():
+# def main():
+def step_1_ingest():
     df = pd.read_csv(CSV_PATH)
     df['score'] = pd.to_numeric(df.get('score'), errors='coerce')
     df['total_sleep_hours'] = pd.to_numeric(df.get('total_sleep_hours'), errors='coerce')
     df = df.dropna(subset=['day'])
     docs = [row_to_doc(r) for _, r in df.iterrows()]
+    return docs
 
+def step_2_encode(docs):
     model = SentenceTransformer(MODEL_NAME)
     embs = model.encode(docs, convert_to_numpy=True, normalize_embeddings=True)
 
@@ -41,11 +44,16 @@ def main():
     dim = embs.shape[1]
     index = faiss.IndexFlatIP(dim)  # cosine via normalized dot product
     index.add(embs)
+    return index
 
+
+def step_3_write_index(index, docs):
     faiss.write_index(index, INDEX_PATH)
     with open(DOCS_JSON, "w") as f:
         json.dump(docs, f, ensure_ascii=False, indent=2)
     print(f"Saved {len(docs)} docs → {INDEX_PATH}")
 
 if __name__ == "__main__":
-    main()
+    docs = step_1_ingest()
+    index = step_2_encode(docs)
+    step_3_write_index(index, docs)
